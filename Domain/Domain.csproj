@@ -12,8 +12,7 @@
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\UserInfo.cs" />
     <Compile Include="Entities\Writer.cs" />
-
-
+    <Compile Include="Entities\Favorite.cs" />
   </ItemGroup>
 
   <ItemGroup>

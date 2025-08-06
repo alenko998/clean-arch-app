@@ -8,5 +8,7 @@ namespace Domain.Entities
         public string Role { get; set; } = "User";
         public int? UserInfoId { get; set; }           // Foreign key
         public UserInfo? UserInfo { get; set; }
+        public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
+
     }
 }

@@ -152,6 +152,7 @@
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Azure.Core.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Azure.Identity.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Humanizer.dll
+/Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
@@ -262,9 +263,9 @@
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Application.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Domain.dll
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Infrastructure.dll
-/Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Infrastructure.pdb
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Application.pdb
 /Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Domain.pdb
+/Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Infrastructure.pdb
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.csproj.AssemblyReference.cache
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.GeneratedMSBuildEditorConfig.editorconfig
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.AssemblyInfoInputs.cache
@@ -272,6 +273,7 @@
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.csproj.CoreCompileInputs.cache
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.MvcApplicationPartsAssemblyInfo.cs
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.MvcApplicationPartsAssemblyInfo.cache
+/Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.sourcelink.json
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/staticwebassets.build.json
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/staticwebassets.development.json
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/staticwebassets/msbuild.api.Microsoft.AspNetCore.StaticWebAssets.props
@@ -286,5 +288,3 @@
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.pdb
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.genruntimeconfig.cache
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/ref/api.dll
-/Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.sourcelink.json
-/Users/alen/Desktop/clean-arch-app/api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

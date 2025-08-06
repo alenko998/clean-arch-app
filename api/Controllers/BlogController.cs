@@ -18,7 +18,7 @@ namespace api.Controllers
             _blogRepository = blogRepository;
         }
 
-        [Authorize(Roles = "User")]
+        // [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBlogDto dto)
         {
@@ -32,7 +32,7 @@ namespace api.Controllers
             return CreatedAtAction(nameof(Create), new { id = created.Id }, created);
         }
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog([FromRoute] int id)
         {

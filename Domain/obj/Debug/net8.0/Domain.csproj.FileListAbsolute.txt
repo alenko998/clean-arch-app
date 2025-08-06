@@ -33,9 +33,9 @@
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.csproj.CoreCompileInputs.cache
+/Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.sourcelink.json
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.dll
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/refint/Domain.dll
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.pdb
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.genruntimeconfig.cache
 /Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/ref/Domain.dll
-/Users/alen/Desktop/clean-arch-app/Domain/obj/Debug/net8.0/Domain.sourcelink.json
