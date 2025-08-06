@@ -17,6 +17,7 @@
     <Compile Include="Interfaces\IUserInfoRepository.cs" />
     <Compile Include="Interfaces\IWriterRepository.cs" />
     <Compile Include="Interfaces\IJwtService.cs" />
+    <Compile Include="Interfaces\IFavoriteRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,8 @@
-using Domain.Entities;
-using Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using api.Mapping;
-using api.DTOs.Writer;
 using api.DTOs.Blog;
+using api.DTOs.Writer;
+using api.Mapping;
+using Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
@@ -12,66 +10,67 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class FavoriteController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IFavoriteRepository _repository;
 
-        public FavoriteController(AppDbContext context)
+        public FavoriteController(IFavoriteRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
+        // POST: /api/favorite/{writerId}/favorite/{blogId}
         [HttpPost("{writerId}/favorite/{blogId}")]
         public async Task<IActionResult> AddFavorite(int writerId, int blogId)
         {
-            var exists = await _context.Favorites.FindAsync(writerId, blogId);
-            if (exists != null)
-                return BadRequest("Already marked as favorite.");
+            var result = await _repository.AddFavoriteAsync(writerId, blogId);
 
-            var writer = await _context.Writers.FindAsync(writerId);
-            if (writer == null) return NotFound($"Writer {writerId} not found.");
+            if (result.Contains("not found") || result.Contains("Already"))
+                return BadRequest(result);
 
-            var blog = await _context.Blogs.FindAsync(blogId);
-            if (blog == null) return NotFound($"Blog {blogId} not found.");
-
-            var favorite = new Favorite
-            {
-                WriterId = writerId,
-                BlogId = blogId,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            _context.Favorites.Add(favorite);
-            await _context.SaveChangesAsync();
-
-            return Ok("Blog favorited.");
+            return Ok(result);
         }
 
-        [HttpGet("blog/{blogId}")]
-        public async Task<ActionResult<IEnumerable<WriterDto>>> GetWritersByBlog(int blogId)
+        // DELETE: /api/favorite/{writerId}/favorite/{blogId}
+        [HttpDelete("{writerId}/favorite/{blogId}")]
+        public async Task<IActionResult> RemoveFavorite(int writerId, int blogId)
         {
-            var writers = await _context.Favorites
-                .Where(f => f.BlogId == blogId)
-                .Include(f => f.Writer)
-                    .ThenInclude(w => w.UserInfo)
-                .Select(f => WriterMapping.ToDto(f.Writer))
-                .ToListAsync();
+            var result = await _repository.RemoveFavoriteAsync(writerId, blogId);
 
-            return Ok(writers);
+            if (result.Contains("not found"))
+                return NotFound(result);
+
+            return Ok(result);
         }
 
+        // GET: /api/favorite/writer/{writerId}
         [HttpGet("writer/{writerId}")]
-        public async Task<ActionResult<IEnumerable<BlogDto>>> GetBlogsByWriter(int writerId)
+        public async Task<IActionResult> GetBlogsByWriter(int writerId)
         {
-            var writerExists = await _context.Writers.AnyAsync(w => w.Id == writerId);
-            if (!writerExists)
-                return NotFound($"Writer with ID {writerId} not found.");
+            try
+            {
+                var blogs = await _repository.GetBlogsByWriterAsync(writerId);
+                var dto = blogs.Select(BlogMapping.ToDto);
+                return Ok(dto);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
 
-            var blogs = await _context.Favorites
-                .Where(f => f.WriterId == writerId)
-                .Include(f => f.Blog)
-                .Select(f => BlogMapping.ToDto(f.Blog))
-                .ToListAsync();
-
-            return Ok(blogs);
+        // GET: /api/favorite/blog/{blogId}
+        [HttpGet("blog/{blogId}")]
+        public async Task<IActionResult> GetWritersByBlog(int blogId)
+        {
+            try
+            {
+                var writers = await _repository.GetWritersByBlogAsync(blogId);
+                var dto = writers.Select(WriterMapping.ToDto);
+                return Ok(dto);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
