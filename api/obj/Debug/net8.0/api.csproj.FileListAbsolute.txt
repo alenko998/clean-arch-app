@@ -286,3 +286,4 @@
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.pdb
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.genruntimeconfig.cache
 /Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/ref/api.dll
+/Users/alen/Desktop/clean-arch-app/api/obj/Debug/net8.0/api.sourcelink.json

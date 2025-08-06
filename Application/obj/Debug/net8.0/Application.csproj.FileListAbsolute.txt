@@ -48,3 +48,4 @@
 /Users/alen/Desktop/clean-arch-app/Application/obj/Debug/net8.0/Application.pdb
 /Users/alen/Desktop/clean-arch-app/Application/obj/Debug/net8.0/Application.genruntimeconfig.cache
 /Users/alen/Desktop/clean-arch-app/Application/obj/Debug/net8.0/ref/Application.dll
+/Users/alen/Desktop/clean-arch-app/Application/obj/Debug/net8.0/Application.sourcelink.json

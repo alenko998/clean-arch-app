@@ -36,3 +36,4 @@
 /Users/alen/Desktop/clean-arch-app/Infrastructure/obj/Debug/net8.0/Infrastructure.pdb
 /Users/alen/Desktop/clean-arch-app/Infrastructure/obj/Debug/net8.0/Infrastructure.genruntimeconfig.cache
 /Users/alen/Desktop/clean-arch-app/Infrastructure/obj/Debug/net8.0/ref/Infrastructure.dll
+/Users/alen/Desktop/clean-arch-app/Infrastructure/obj/Debug/net8.0/Infrastructure.sourcelink.json

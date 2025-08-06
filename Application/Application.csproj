@@ -16,6 +16,7 @@
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\IUserInfoRepository.cs" />
     <Compile Include="Interfaces\IAccountUserRepository.cs" />
+    <Compile Include="Interfaces\IWriterRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

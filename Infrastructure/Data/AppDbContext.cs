@@ -14,6 +14,8 @@ namespace Infrastructure.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<AccountUser> AccountUsers { get; set; }
+        public DbSet<Writer> Writers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
