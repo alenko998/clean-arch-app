@@ -1,5 +1,4 @@
 using api.DTOs.AccountUser;
-using api.DTOs.UserInfo;
 using Domain.Entities;
 
 namespace api.Mapping
@@ -30,15 +29,8 @@ namespace api.Mapping
             {
                 Id = user.Id,
                 Username = user.Username,
-                Password = user.Password,
-                UserInfo = user.UserInfo is null ? null : new UserInfoDto
-                {
-                    Email = user.UserInfo.Email,
-                    FirstName = user.UserInfo.FirstName,
-                    LastName = user.UserInfo.LastName
-                }
+                Password = user.Password
             };
         }
-
     }
 }

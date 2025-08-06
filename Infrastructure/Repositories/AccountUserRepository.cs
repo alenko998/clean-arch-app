@@ -16,18 +16,13 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<AccountUser>> GetAllAsync()
         {
-            return await _context.AccountUsers
-                .Include(a => a.UserInfo)
-                .ToListAsync();
+            return await _context.AccountUsers.ToListAsync();
         }
 
         public async Task<AccountUser?> GetByIdAsync(int id)
         {
-            return await _context.AccountUsers
-                .Include(a => a.UserInfo)
-                .FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.AccountUsers.FirstOrDefaultAsync(a => a.Id == id);
         }
-
 
         public async Task<AccountUser> CreateAsync(AccountUser user)
         {

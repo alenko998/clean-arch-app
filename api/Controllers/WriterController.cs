@@ -22,11 +22,20 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Writer>>> GetAll()
+        public async Task<ActionResult<IEnumerable<WriterDto>>> GetAll()
         {
             var writers = await _writerRepository.GetAllAsync();
             var result = writers.Select(WriterMapping.ToDto);
             return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var writer = await _writerRepository.GetByIdAsync(id);
+            if (writer == null) return NotFound($"Writer with ID {id} not found.");
+
+            return Ok(WriterMapping.ToDto(writer));
         }
 
         [HttpPost("register")]
@@ -55,7 +64,7 @@ namespace api.Controllers
             {
                 Username = dto.Username,
                 Password = $"{Convert.ToBase64String(salt)}.{hashed}",
-                Role = "User" // ✅ DODATO OVDE
+                Role = "User"
             };
 
             var created = await _writerRepository.CreateAsync(writer);

@@ -1,5 +1,6 @@
 using Domain.Entities;
 using api.DTOs.Writer;
+using api.DTOs.UserInfo;
 
 namespace api.Mapping
 {
@@ -11,7 +12,12 @@ namespace api.Mapping
             {
                 Id = writer.Id,
                 Username = writer.Username,
-                Password = writer.Password
+                UserInfo = writer.UserInfo is null ? null : new UserInfoDto
+                {
+                    Email = writer.UserInfo.Email,
+                    FirstName = writer.UserInfo.FirstName,
+                    LastName = writer.UserInfo.LastName
+                }
             };
         }
     }

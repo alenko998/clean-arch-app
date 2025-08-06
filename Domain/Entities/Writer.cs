@@ -6,5 +6,7 @@ namespace Domain.Entities
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Role { get; set; } = "User";
+        public int? UserInfoId { get; set; }           // Foreign key
+        public UserInfo? UserInfo { get; set; }
     }
 }

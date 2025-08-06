@@ -16,11 +16,23 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Writer>> GetAllAsync()
         {
-            return await _context.Writers.ToListAsync();
+            return await _context.Writers
+                .Include(w => w.UserInfo)
+                .ToListAsync();
         }
+
+        public async Task<Writer?> GetByIdAsync(int id)
+        {
+            return await _context.Writers
+                .Include(w => w.UserInfo)
+                .FirstOrDefaultAsync(w => w.Id == id);
+        }
+
         public async Task<Writer?> GetByUsernameAsync(string username)
         {
-            return await _context.Writers.FirstOrDefaultAsync(w => w.Username == username);
+            return await _context.Writers
+                .Include(w => w.UserInfo)
+                .FirstOrDefaultAsync(w => w.Username == username);
         }
 
         public async Task<Writer> CreateAsync(Writer writer)

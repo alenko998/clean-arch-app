@@ -14,7 +14,6 @@ namespace api.Controllers
         private readonly IUserInfoRepository _repository;
         private readonly AppDbContext _context;
 
-
         public UserInfoController(IUserInfoRepository repository, AppDbContext context)
         {
             _repository = repository;
@@ -73,12 +72,12 @@ namespace api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("assign-to-user/{accountUserId}")]
-        public async Task<IActionResult> AssignToUser([FromRoute] int accountUserId, [FromBody] AssignUserInfoDto dto)
+        [HttpPost("assign-to-writer/{writerId}")]
+        public async Task<IActionResult> AssignToWriter([FromRoute] int writerId, [FromBody] AssignUserInfoDto dto)
         {
-            var user = await _context.AccountUsers.FindAsync(accountUserId);
-            if (user == null)
-                return NotFound($"AccountUser with ID {accountUserId} not found.");
+            var writer = await _context.Writers.FindAsync(writerId);
+            if (writer == null)
+                return NotFound($"Writer with ID {writerId} not found.");
 
             var info = new UserInfo
             {
@@ -90,12 +89,10 @@ namespace api.Controllers
             _context.UserInfos.Add(info);
             await _context.SaveChangesAsync();
 
-            user.UserInfoId = info.Id;
+            writer.UserInfoId = info.Id;
             await _context.SaveChangesAsync();
 
-            return Ok("UserInfo successfully assigned to AccountUser.");
+            return Ok("UserInfo successfully assigned to Writer.");
         }
-
-
     }
 }
