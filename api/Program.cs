@@ -2,15 +2,48 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using api.Controllers;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddControllers(); // Dodaje podršku za API kontrolere
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// ✅ Add Swagger with JWT auth support
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new() { Title = "CleanArch API", Version = "v1" });
+
+    // Add JWT auth option to Swagger
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your valid token.\nExample: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 // Register DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -24,10 +57,21 @@ builder.Services.AddScoped<IAccountUserRepository, AccountUserRepository>();
 builder.Services.AddScoped<IWriterRepository, WriterRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+// ✅ Configure JWT Authentication
+var key = builder.Configuration["Jwt:Key"];
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key!))
+        };
+    });
 
-
-
-
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -40,6 +84,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapControllers(); // Mapira sve [ApiController] kontrolere
+// ✅ Add authentication & authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

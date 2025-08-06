@@ -2,6 +2,7 @@ using api.DTOs.Blog;
 using api.Mapping;
 using Application.Interfaces;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -17,6 +18,7 @@ namespace api.Controllers
             _blogRepository = blogRepository;
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBlogDto dto)
         {
@@ -30,6 +32,7 @@ namespace api.Controllers
             return CreatedAtAction(nameof(Create), new { id = created.Id }, created);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog([FromRoute] int id)
         {

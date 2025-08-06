@@ -42,7 +42,6 @@ namespace api.Controllers
             if (existing != null)
                 return Conflict("Username is already taken.");
 
-            // Hash password
             var salt = RandomNumberGenerator.GetBytes(16);
             var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: dto.Password,
@@ -55,7 +54,8 @@ namespace api.Controllers
             var writer = new Writer
             {
                 Username = dto.Username,
-                Password = $"{Convert.ToBase64String(salt)}.{hashed}"
+                Password = $"{Convert.ToBase64String(salt)}.{hashed}",
+                Role = "User" // ✅ DODATO OVDE
             };
 
             var created = await _writerRepository.CreateAsync(writer);
@@ -65,6 +65,44 @@ namespace api.Controllers
             {
                 Id = created.Id,
                 Username = created.Username,
+                Token = token
+            });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] WriterLoginDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
+                return BadRequest("Username and password are required.");
+
+            var writer = await _writerRepository.GetByUsernameAsync(dto.Username);
+            if (writer == null)
+                return NotFound("Account with this username does not exist.");
+
+            var parts = writer.Password.Split('.');
+            if (parts.Length != 2)
+                return Unauthorized("Stored password is invalid.");
+
+            var salt = Convert.FromBase64String(parts[0]);
+            var storedHash = parts[1];
+
+            var inputHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: dto.Password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 32
+            ));
+
+            if (storedHash != inputHash)
+                return Unauthorized("Invalid password.");
+
+            var token = _tokenService.CreateToken(writer);
+
+            return Ok(new WriterResponseDto
+            {
+                Id = writer.Id,
+                Username = writer.Username,
                 Token = token
             });
         }

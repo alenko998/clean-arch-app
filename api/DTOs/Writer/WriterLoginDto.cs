@@ -1,10 +1,8 @@
-namespace Domain.Entities
+namespace api.DTOs.Writer
 {
-    public class Writer
+    public class WriterLoginDto
     {
-        public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public string Role { get; set; } = "User";
     }
 }

@@ -22,6 +22,7 @@ namespace Infrastructure.Repositories
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, writer.Username),
+                new Claim(ClaimTypes.Role, writer.Role), // 👈 Dodato: rola
                 new Claim("WriterId", writer.Id.ToString())
             };
 
