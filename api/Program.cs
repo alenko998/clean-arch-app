@@ -53,7 +53,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IUserInfoRepository, UserInfoRepository>();
-builder.Services.AddScoped<IAccountUserRepository, AccountUserRepository>();
 builder.Services.AddScoped<IWriterRepository, WriterRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
