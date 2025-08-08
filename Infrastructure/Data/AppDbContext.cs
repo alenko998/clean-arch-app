@@ -32,6 +32,13 @@ namespace Infrastructure.Data
                 .HasForeignKey(c => c.BlogId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // ✅ One-to-Many: Writer → Blog
+            builder.Entity<Blog>()
+                .HasOne(b => b.Writer)
+                .WithMany(w => w.Blogs)
+                .HasForeignKey(b => b.WriterId)
+                .OnDelete(DeleteBehavior.Restrict); // ✔ izbegava ciklične cascade putanje
+
             // Many-to-Many: Writer ↔ Blog (via Favorite)
             builder.Entity<Favorite>()
                 .HasKey(f => new { f.WriterId, f.BlogId });
@@ -39,12 +46,14 @@ namespace Infrastructure.Data
             builder.Entity<Favorite>()
                 .HasOne(f => f.Writer)
                 .WithMany(w => w.Favorites)
-                .HasForeignKey(f => f.WriterId);
+                .HasForeignKey(f => f.WriterId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Favorite>()
                 .HasOne(f => f.Blog)
                 .WithMany(b => b.Favorites)
-                .HasForeignKey(f => f.BlogId);
+                .HasForeignKey(f => f.BlogId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

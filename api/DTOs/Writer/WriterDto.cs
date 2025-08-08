@@ -1,3 +1,4 @@
+using api.DTOs.Blog;
 using api.DTOs.UserInfo;
 
 namespace api.DTOs.Writer
@@ -7,5 +8,7 @@ namespace api.DTOs.Writer
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public UserInfoDto? UserInfo { get; set; }
+
+        public List<BlogDto> Blogs { get; set; } = new();
     }
 }

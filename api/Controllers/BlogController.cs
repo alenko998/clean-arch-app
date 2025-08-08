@@ -1,4 +1,5 @@
 using api.DTOs.Blog;
+using api.Helpers;
 using api.Mapping;
 using Application.Interfaces;
 using Domain.Entities;
@@ -18,21 +19,20 @@ namespace api.Controllers
             _blogRepository = blogRepository;
         }
 
-        // [Authorize(Roles = "User")]
         [HttpPost]
+        [Authorize(Roles = "User,Writer")]
         public async Task<IActionResult> Create([FromBody] CreateBlogDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Title) || string.IsNullOrWhiteSpace(dto.Content))
-            {
                 return BadRequest("Title and content are required.");
-            }
-            var blog = BlogMapping.ToEntity(dto);
+
+            var writerId = TokenReader.GetWriterIdFromClaims(User);
+            var blog = BlogMapping.ToEntity(dto, writerId);
             var created = await _blogRepository.CreateAsync(blog);
 
-            return CreatedAtAction(nameof(Create), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, BlogMapping.ToDto(created));
         }
 
-        // [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog([FromRoute] int id)
         {
@@ -56,7 +56,6 @@ namespace api.Controllers
             return Ok(BlogMapping.ToDto(blog));
         }
 
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBlog(int id, UpdateBlogDto dto)
         {
@@ -64,7 +63,7 @@ namespace api.Controllers
                 return BadRequest("Invalid blog id or data.");
 
             var blogToUpdate = BlogMapping.ToEntityFromUpdate(dto);
-            blogToUpdate.Id = id; // osiguraj da id dolazi iz route
+            blogToUpdate.Id = id;
 
             var updated = await _blogRepository.UpdateAsync(id, blogToUpdate);
 

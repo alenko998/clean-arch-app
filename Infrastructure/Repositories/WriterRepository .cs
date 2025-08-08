@@ -18,6 +18,8 @@ namespace Infrastructure.Repositories
         {
             return await _context.Writers
                 .Include(w => w.UserInfo)
+                .Include(w => w.Blogs)
+                .ThenInclude(b => b.Comments)
                 .ToListAsync();
         }
 
@@ -25,6 +27,8 @@ namespace Infrastructure.Repositories
         {
             return await _context.Writers
                 .Include(w => w.UserInfo)
+                .Include(w => w.Blogs)
+                .ThenInclude(b => b.Comments)
                 .FirstOrDefaultAsync(w => w.Id == id);
         }
 
@@ -32,6 +36,8 @@ namespace Infrastructure.Repositories
         {
             return await _context.Writers
                 .Include(w => w.UserInfo)
+                .Include(w => w.Blogs)
+                .ThenInclude(b => b.Comments)
                 .FirstOrDefaultAsync(w => w.Username == username);
         }
 

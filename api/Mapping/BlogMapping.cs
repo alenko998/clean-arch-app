@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.DTOs.Blog;
 using api.DTOs.Comment;
 using Domain.Entities;
@@ -16,6 +12,16 @@ namespace api.Mapping
             {
                 Title = dto.Title,
                 Content = dto.Content
+            };
+        }
+
+        public static Blog ToEntity(CreateBlogDto dto, int writerId)
+        {
+            return new Blog
+            {
+                Title = dto.Title,
+                Content = dto.Content,
+                WriterId = writerId
             };
         }
 
@@ -43,6 +49,4 @@ namespace api.Mapping
             };
         }
     }
-
-
 }
