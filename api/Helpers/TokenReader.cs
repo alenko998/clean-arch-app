@@ -7,10 +7,11 @@ namespace api.Helpers
         public static int GetWriterIdFromClaims(ClaimsPrincipal user)
         {
             var claim = user.Claims.FirstOrDefault(c => c.Type == "WriterId");
-            if (claim == null)
-                throw new UnauthorizedAccessException("WriterId not found in token.");
 
-            return int.Parse(claim.Value);
+            if (claim == null || !int.TryParse(claim.Value, out int writerId))
+                return -1; // vraćamo -1 ako WriterId ne postoji ili nije broj
+
+            return writerId;
         }
     }
 }
